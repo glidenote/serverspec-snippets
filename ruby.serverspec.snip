@@ -1,6 +1,9 @@
 # Serverspec
 # Resource Types http://serverspec.org/resource_types.html
 
+snippet req_spec_helper
+    require 'spec_helper'
+
 ## cgroup http://serverspec.org/resource_types.html#cgroup
 snippet cgroup
     describe cgroup('${1:description}') do
