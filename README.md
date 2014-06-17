@@ -1,6 +1,6 @@
 # serverspec-snippets
 
-This is vim snippets for [serverspec](http://serverspec.org/).
+This is vim snippets for [Serverspec](http://serverspec.org/).
 
 <p><a href="http://vimeo.com/98406679">serverspec-snippets</a> from <a href="http://vimeo.com/glidenote">glidenote</a> on <a href="https://vimeo.com">Vimeo</a>.</p>
 <a href="http://vimeo.com/98406679"><img src="http://i.vimeocdn.com/video/479112148_640.jpg"/></a>
@@ -46,7 +46,7 @@ let g:neosnippet#snippets_directory = '~/.vim/your_snippets, ~/.vim/bundle/serve
 
 ### Usage
 
-open serverspec files and set filetype `ruby.serverspec`
+open Serverspec files and set filetype `ruby.serverspec`
 
 ``` vim
 :set ft=ruby.serverspec
