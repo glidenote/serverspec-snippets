@@ -1,0 +1,506 @@
+# Serverspec
+# Resource Types http://serverspec.org/resource_types.html
+
+## cgroup http://serverspec.org/resource_types.html#cgroup
+snippet cgroup
+    describe cgroup('${1:description}') do
+      its('${2:cgroup parameters}') { should ${3} }
+    end
+
+## command http://serverspec.org/resource_types.html#command
+snippet command
+    describe command('${1:command}') do
+      ${2:TARGET}
+    end
+
+snippet command_return_stdout
+    it { should return_stdout '${1:pattern}' }
+
+snippet command_return_stderr
+    it { should return_stderr '${1:pattern}' }
+
+snippet command_return_exit_status
+    it { should return_exit_status '${1:status_code}' }
+
+snippet command_its_stdout_stderr
+    describe command('${1:command}') do
+      its(:stdout) { should match /${2:pattern}/ }
+    end
+    
+    describe command('${3:command}') do
+      its(:stderr) { should match /${4:pattern}/ }
+    end
+
+# cron http://serverspec.org/resource_types.html#cron 
+snippet cron
+    describe cron do
+      it { should have_entry '${1:cron}' }
+    end
+
+snippet cron_with_user
+    describe cron do
+      it { should have_entry('${1:cron}').with_user('${2:user}') }
+    end
+
+# default_gateway http://serverspec.org/resource_types.html#default_gateway
+snippet default_gateway
+    describe default_gateway do
+      its(:ipaddress) { should eq '${1:ipaddress}' }
+      its(:interface) { should eq '${2:interface}' }
+    end
+
+# file http://serverspec.org/resource_types.html#file
+snippet file
+    describe file('${1:file}') do
+      ${2:TARGET}
+    end
+
+snippet file_be_file
+    it { should be_file }
+
+snippet file_be_directory
+    it { should be_directory }
+
+snippet file_be_socket
+    it { should be_socket }
+
+snippet file_content
+    its(:content) { should match /${1:pattern}/ }
+
+snippet file_be_mode
+    it { should be_mode ${1:mode} }
+
+snippet file_be_owned_by
+    it { should be_owned_by '${1:owner}' }
+
+snippet file_be_grouped_into
+    it { should be_grouped_into '${1:group}' }
+
+snippet file_be_linked_to
+    it { should be_linked_to '${1:link}' }
+
+snippet file_be_readable
+    it { should be_readable }
+
+snippet file_be_readable_extend
+    it { should be_readable.by('${1:owner}') }
+    it { should be_readable.by('${2:group}') }
+    it { should be_readable.by('${3:others}') }
+    it { should be_readable.by_user('${4:username}') }
+
+snippet file_be_writable
+    it { should be_writable }
+
+snippet file_be_writable_extend
+    it { should be_writable.by('${1:owner}') }
+    it { should be_writable.by('${2:group}') }
+    it { should be_writable.by('${3:others}') }
+    it { should be_writable.by_user('${4:username}') }
+
+snippet file_be_executable
+    it { should be_executable }
+
+snippet file_be_executable_extend
+    it { should be_executable.by('${1:owner}') }
+    it { should be_executable.by('${2:group}') }
+    it { should be_executable.by('${3:others}') }
+    it { should be_executable.by_user('${4:username}') }
+
+snippet file_be_mounted
+    it { should be_mounted }
+
+snippet file_be_mounted_type
+    it { should be_mounted.with( :type => '${1:type}' ) }
+
+snippet file_be_mounted_options
+    it { should be_mounted.with( :options => { ${1:option} } ) }
+
+snippet file_be_mounted_extend
+    it do
+      should be_mounted.only_with(
+        :device  => '${1:device}',
+        :type    => '${2:type}',
+        :options => {
+          ${2:options}
+        }
+      )
+    end
+
+snippet file_be_version
+    it { should be_version('${1:version}') }
+
+snippet file_match_md5checksum
+    it { should match_md5checksum '${1:md5checksum}' }
+
+snippet file_match_sha256checksum
+    it { should match_sha256checksum '${1:sha256checksum}' }
+
+snippet file_resource
+    it { should be_file }
+    its(:content) { should match /${1:pattern}/ }
+    it { should be_mode ${2:mode} }
+    it { should be_owned_by '${3:owner}' }
+    it { should be_grouped_into '${4:group}' }
+
+## group http://serverspec.org/resource_types.html#group
+snippet group
+    describe group('${1:group}') do
+      ${2:TARGET}
+    end
+
+snippet group_exist
+    it { should exist }
+
+snippet group_have_gid
+    it { should have_gid ${1:gid} }
+
+## host http://serverspec.org/resource_types.html#host
+snippet host
+    describe host('${1:hostname}') do
+
+    end
+
+snippet host_be_resolvable
+    it { should be_resolvable }
+
+snippet host_be_resolvable_hosts
+    it { should be_resolvable.by('hosts') }
+
+snippet host_be_resolvable_dns
+    it { should be_resolvable.by('dns') }
+
+snippet host_be_reachable
+    # ping
+    it { should be_reachable }
+    # tcp port 22
+    it { should be_reachable.with( :port => 22 ) }
+    # set protocol explicitly
+    it { should be_reachable.with( :port => 22, :proto => 'tcp' ) }
+    # udp port 53
+    it { should be_reachable.with( :port => 53, :proto => 'udp' ) }
+    # timeout setting (default is 5 seconds)
+    it { should be_reachable.with( :port => 22, :proto => 'tcp', :timeout => 1 ) }
+
+snippet host_its_ipaddress_eq
+    its(:ipaddress) { should eq '${1:ipaddress}' }
+
+snippet host_its_ipaddress_match
+    its(:ipaddress) { should match '${1:ipaddress}' }
+
+## iis_app_pool http://serverspec.org/resource_types.html#iis_app_pool
+snippet iis_app_pool
+    describe iis_app_pool('${1:Default App Pool}') do
+
+    end
+
+snippet iis_app_pool_exists
+    it{ should exist }
+
+snippet iis_app_pool_have_dotnet_version
+    it{ should have_dotnet_version('${1:version}') }
+
+## iis_website http://serverspec.org/resource_types.html#iis_website
+snippet iis_website
+    describe iis_website('${1:Default Website}') do
+
+    end
+
+snippet iis_website_exists
+    it{ should exist }
+
+snippet iis_website_enabled
+    it{ should be_enabled }
+
+snippet iis_website_running
+    it{ should be_running }
+
+snippet iis_website_in_app_pool
+    it{ should be_in_app_pool('Default App Pool') }
+
+snippet iis_website_have_physical_path
+    it{ should have_physical_path('C:\\inetpub\\www') } 
+
+## interface http://serverspec.org/resource_types.html#interface
+snippet interface
+    describe interface('${1:interface}') do
+
+    end
+
+snippet interface_speed
+    its(:speed) { should eq ${1:speed} }
+
+snippet interface_have_ipv4_address
+    it { should have_ipv4_address("${1:ipaddress}") }
+    it { should have_ipv4_address("${2:ipaddress/netmask}") }
+
+## ipfilter http://serverspec.org/resource_types.html#ipfilter
+snippet ipfilter_have_rule
+    describe ipfilter do
+      it { should have_rule '${1:ipfilter_rule}' }
+    end
+
+## ipnat http://serverspec.org/resource_types.html#ipnat
+snippet ipnat_have_rule
+    describe ipnat do
+      it { should have_rule '${1:ipnat_rule}' }
+    end
+
+## iptables http://serverspec.org/resource_types.html#iptables
+snippet iptables_have_rule
+    describe iptables do
+      it { should have_rule('${1:iptables_rule}') }
+    end
+
+snippet iptables_have_rule_extend
+    describe iptables do
+      it { should have_rule('${1:iptables_rule}').with_table('${2:table}').with_chain('${3:chain}') }
+    end
+
+## kernel_module http://serverspec.org/resource_types.html#kernel_module
+snippet kernel_module_be_loaded
+    describe kernel_module('${1:kernel_module}') do
+      it { should be_loaded }
+    end
+
+## linux_kernel_parameter http://serverspec.org/resource_types.html#linux_kernel_parameter
+snippet linux_kernel_parameter
+    describe 'Linux kernel parameters' do
+      context linux_kernel_parameter('net.ipv4.tcp_syncookies') do 
+        its(:value) { should eq 1 }
+      end
+    
+      context linux_kernel_parameter('kernel.shmall') do
+        its(:value) { should be >= 4294967296 }
+      end
+    
+      context linux_kernel_parameter('kernel.shmmax') do
+        its(:value) { should be <= 68719476736 }
+      end
+    
+      context linux_kernel_parameter('kernel.osrelease') do
+        its(:value) { should eq '2.6.32-131.0.15.el6.x86_64' }
+      end
+    
+      context linux_kernel_parameter('net.ipv4.tcp_wmem') do
+        its(:value) { should match /4096\t16384\t4194304/ }
+      end
+    end
+
+## LXC http://serverspec.org/resource_types.html#LXC
+snippet lxc
+    describe lxc('${1:lxc}') do
+      it { should exist }
+      it { should be_running }
+    end
+
+## mail_alias http://serverspec.org/resource_types.html#mail_alias
+snippet mail_alias
+    describe mail_alias('${1:mail_alias}') do
+      it { should be_aliased_to '${2:user}' }
+    end
+
+## package http://serverspec.org/resource_types.html#package
+snippet package_be_installed
+    describe package('${1:package}') do
+      it { should be_installed }
+    end
+
+snippet package_be_installed_gem
+    describe package('${1:gem_name}') do
+      it { should be_installed.by('gem').with_version('${2:gem_version}') }
+    end
+
+## php_config http://serverspec.org/resource_types.html#php_config
+snippet php_config
+    describe 'PHP config parameters' do
+      context  php_config('default_mimetype') do
+        its(:value) { should eq 'text/html' }
+      end
+    
+      context php_config('session.cache_expire') do
+        its(:value) { should eq 180 }
+      end
+    
+      context php_config('mbstring.http_output_conv_mimetypes') do
+        its(:value) { should match /application/ }
+      end
+    end
+
+## port http://serverspec.org/resource_types.html#port
+snippet port_be_listening
+    describe port(${1:port_number}) do
+      it { should be_listening }
+    end
+
+snippet port_be_listening_extend
+    describe port(${1:port_number}) do
+      it { should be_listening.with('${2:protocol}') }
+    end
+
+## ppa http://serverspec.org/resource_types.html#ppa
+snippet ppa_exist
+    describe ppa('${1:ppa-name}') do
+      it { should exist }
+    end
+
+snippet ppa_be_enabled
+    describe ppa('${1:ppa-name}') do
+      it { should be_enabled }
+    end
+
+## process http://serverspec.org/resource_types.html#process
+snippet process
+    describe process("${1:process}") do
+      its(:args) { should match /${2:pattern}/ }
+    end
+
+snippet process_be_running
+    describe process("${1:process}") do
+      it { should be_running }a
+    end
+
+## routing_table http://serverspec.org/resource_types.html#routing_table
+snippet routing_table_have_entry
+    describe routing_table do
+      it do
+        should have_entry(
+          :destination => '${1:iptables/netmask}',
+          :interface   => '${2:interface}',
+          :gateway     => '${3:gateway}',
+        )
+      end
+    end
+
+## selinux http://serverspec.org/resource_types.html#selinux
+snippet selinux
+    # SELinux should be disabled
+    describe selinux do
+      it { should be_disabled }
+    end
+    
+    # SELinux should be enforcing
+    describe selinux do
+      it { should be_enforcing }
+    end
+    
+    # SELinux should be permissive
+    describe selinux do
+      it { should be_permissive }
+    end
+
+## service http://serverspec.org/resource_types.html#service
+snippet service
+    describe service('${1:service}') do
+      ${2:TARGET}
+    end
+
+snippet service_be_enabled
+    it { should be_enabled }
+
+snippet service_be_enabled_level
+    it { should be_enabled.with_level(${1:level}) }
+
+snippet service_be_installed_for_windows
+    it { should be_installed }
+
+snippet service_be_running
+    it { should be_running }
+
+snippet service_be_running_under_supervisor
+    it { should be_running.under('supervisor') }
+
+snippet service_be_monitored_by
+    it { should be_monitored_by('${2:monitored_by') }
+
+snippet service_have_start_mode_for_windows
+    it { should have_start_mode('Manual') }
+
+snippet service_be_enabled_and_running
+    it { should be_enabled }
+    it { should be_running }
+
+## user http://serverspec.org/resource_types.html#user
+snippet user
+    describe user('${1:user}') do
+      ${2:TARGET}
+    end
+
+snippet user_exist
+    it { should exist }
+
+snippet user_belong_to_group
+    it { should belong_to_group '${2:group'} }
+
+snippet user_have_uid
+    it { should have_uid ${1:uid} }
+
+snippet user_have_home_directory
+    it { should have_home_directory '${1:dir_path}' }
+
+snippet user_have_login_shell
+    it { should have_login_shell '${1:shell_path}' }
+
+snippet user_have_authorized_key
+    it { should have_authorized_key '${1:authorized_key}' }
+
+## windows_feature http://serverspec.org/resource_types.html#windows_feature
+snippet windows_feature_installed
+    describe windows_feature('${1:service}') do
+      it{ should be_installed }
+    end
+
+snippet windows_feature_installed_extend
+    describe windows_feature('IIS-Webserver') do
+      it{ should be_installed.by("dism") }
+    end
+    
+    describe windows_feature('Web-Webserver') do
+      it{ should be_installed.by("powershell") }
+    end
+
+## windows_registry_key http://serverspec.org/resource_types.html#windows_registry_key
+snippet windows_registry_key_exist
+    describe windows_registry_key('HKEY_USERS\S-1-5-21\Test MyKey') do
+      it { should exist }
+    end
+
+snippet windows_registry_key_have_property
+    describe windows_registry_key('HKEY_USERS\S-1-5-21\Test MyKey') do
+      it { should have_property('string value') }
+      it { should have_property('binary value', :type_binary) }
+      it { should have_property('dword value', :type_dword) }
+    end
+
+snippet windows_registry_key_have_value
+    describe windows_registry_key('HKEY_USERS\S-1-5-21\Test MyKey') do
+      it { should have_value('test default data') }
+    end
+
+snippet windows_registry_key_have_property_value
+    describe windows_registry_key('HKEY_USERS\S-1-5-21\Test MyKey') do
+      it { should have_property_value('multistring value', :type_multistring, "test\nmulti\nstring\ndata") }
+      it { should have_property_value('qword value', :type_qword, 'adff32') }
+      it { should have_property_value('binary value', :type_binary, 'dfa0f066') }
+    end
+
+## yumrepo http://serverspec.org/resource_types.html#yumrepo
+snippet yumrepo_exist
+    describe yumrepo('${1:repo}') do
+      it { should exist }
+    end
+
+snippet yumrepo_be_enabled
+    describe yumrepo('${1:repo}') do
+      it { should be_enabled }
+    end
+
+# zfs http://serverspec.org/resource_types.html#zfs
+snippet zfs_exist
+    describe zfs('${1:pool}') do
+      it { should exist }
+    end
+
+snippet zfs_have_property
+    describe zfs('${1:pool}') do
+      it { should have_property 'mountpoint' => '${2:value}', 'compression' => '${3:value}' }
+    end
