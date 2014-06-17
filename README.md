@@ -36,12 +36,15 @@ NeoBundle 'glidenote/serverspec-snippets'
 
 ## Setup
 
-Set serverspec-snippets directory in your .vimrc.
+Set serverspec-snippets directory(`~/.vim/bundle/serverspec-snippets`) in your .vimrc.
 
 
 ``` vim 
-# setting example
-let g:neosnippet#snippets_directory = '~/.vim/your_snippets, ~/.vim/bundle/serverspec-snippets'
+" setting example
+let g:neosnippet#snippets_directory = [
+      \'~/.vim/snippets',
+      \'~/.vim/bundle/serverspec-snippets',
+      \]
 ```
 
 ### Usage
