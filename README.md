@@ -8,7 +8,6 @@ This is vim snippets for [Serverspec](http://serverspec.org/).
 ## Requirement
 
  * [Shougo/neosnippet.vim](https://github.com/Shougo/neosnippet.vim)
- * [Shougo/neosnippet-snippets](https://github.com/Shougo/neosnippet-snippets)
 
 ## Install
 
