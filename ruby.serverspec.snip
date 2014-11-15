@@ -34,6 +34,11 @@ snippet command_its_stdout_stderr
       its(:stderr) { should match /${4:pattern}/ }
     end
 
+snippet command_its_exit_status
+    describe command('${1:command}') do
+      its(:exit_status) { should eq ${2:pattern} }
+    end
+
 # cron http://serverspec.org/resource_types.html#cron 
 snippet cron
     describe cron do
@@ -137,6 +142,12 @@ snippet file_match_md5checksum
 
 snippet file_match_sha256checksum
     it { should match_sha256checksum '${1:sha256checksum}' }
+
+snippet file_its_md5checksum
+    its(:md5sum) { should eq '${1:md5sum}' }
+
+snippet file_its_sha256sum
+    its(:sha256sum) { should eq '${1:sha256sum}' }
 
 snippet file_resource
     it { should be_file }
