@@ -424,7 +424,7 @@ snippet service_be_running_under_supervisor
     it { should be_running.under('supervisor') }
 
 snippet service_be_monitored_by
-    it { should be_monitored_by('${2:monitored_by') }
+    it { should be_monitored_by('${1:monitored_by}')
 
 snippet service_have_start_mode_for_windows
     it { should have_start_mode('Manual') }
