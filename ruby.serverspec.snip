@@ -457,6 +457,14 @@ snippet user_have_login_shell
 snippet user_have_authorized_key
     it { should have_authorized_key '${1:authorized_key}' }
 
+snippet user_resource
+    it { should exist }
+    it { should have_uid ${1:uid} }
+    it { should belong_to_group '${2:group}' }
+    it { should have_home_directory '${3:dir_path}' }
+    it { should have_login_shell '${4:shell_path}' }
+    it { should have_authorized_key '${5:authorized_key}' }
+
 ## windows_feature http://serverspec.org/resource_types.html#windows_feature
 snippet windows_feature_installed
     describe windows_feature('${1:service}') do
