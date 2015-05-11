@@ -240,6 +240,11 @@ snippet interface
 
     end
 
+snippet interface_up
+    describe interface('${1:interface}') do
+    it { should be_up }
+    end
+
 snippet interface_speed
     its(:speed) { should eq ${1:speed} }
 
